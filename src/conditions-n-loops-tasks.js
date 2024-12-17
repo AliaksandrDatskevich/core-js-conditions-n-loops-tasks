@@ -21,8 +21,11 @@
  *  0  => true
  *  -5 => false
  */
-function isPositive(/* number */) {
-  throw new Error('Not implemented');
+function isPositive(number) {
+  if (number >= 0) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -38,8 +41,14 @@ function isPositive(/* number */) {
  *  -5, 0, 5      => 5
  *  -0.1, 0, 0.2  => 0.2
  */
-function getMaxNumber(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getMaxNumber(a, b, c) {
+  if (b > a) {
+    if (c > b) {
+      return c;
+    }
+    return b;
+  }
+  return a;
 }
 
 /**
@@ -60,8 +69,47 @@ function getMaxNumber(/* a, b, c */) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  if (queen.x === king.x || queen.y === king.y) {
+    return true;
+  }
+  for (
+    let { x, y } = queen;
+    x <= 8 && x > 0 && y <= 8 && y > 0;
+    x += 1, y += 1
+  ) {
+    if (x === king.x && y === king.y) {
+      return true;
+    }
+  }
+  for (
+    let { x, y } = queen;
+    x <= 8 && x > 0 && y <= 8 && y > 0;
+    x += 1, y -= 1
+  ) {
+    if (x === king.x && y === king.y) {
+      return true;
+    }
+  }
+  for (
+    let { x, y } = queen;
+    x <= 8 && x > 0 && y <= 8 && y > 0;
+    x -= 1, y -= 1
+  ) {
+    if (x === king.x && y === king.y) {
+      return true;
+    }
+  }
+  for (
+    let { x, y } = queen;
+    x <= 8 && x > 0 && y <= 8 && y > 0;
+    x -= 1, y += 1
+  ) {
+    if (x === king.x && y === king.y) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /**
@@ -82,8 +130,19 @@ function canQueenCaptureKing(/* queen, king */) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  if (a > 0 && b > 0 && c > 0) {
+    if (a === b && a + b > c) {
+      return true;
+    }
+    if (a === c && a + c > b) {
+      return true;
+    }
+    if (b === c && b + c > a) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /**
@@ -100,8 +159,34 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  let result = '';
+  let ten = 0;
+  if (num >= 10) {
+    ten = (num - (num % 10)) / 10;
+  }
+  let rest = num - ten * 10;
+  if (num >= 10) {
+    for (; ten > 0; ten -= 1) {
+      result += 'X';
+    }
+  }
+  if (rest === 9) {
+    result += 'IX';
+    rest -= 9;
+  }
+  if (rest === 4) {
+    result += 'IV';
+    rest -= 4;
+  }
+  if (rest >= 5) {
+    result += 'V';
+    rest -= 5;
+  }
+  for (; rest > 0; rest -= 1) {
+    result += 'I';
+  }
+  return result;
 }
 
 /**
@@ -119,8 +204,58 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let result = '';
+  for (let i = 0; i < numberStr.length; i += 1) {
+    if (i > 0) {
+      result += ' ';
+    }
+    switch (numberStr[i]) {
+      case '0':
+        result += 'zero';
+        break;
+      case '1':
+        result += 'one';
+        break;
+      case '2':
+        result += 'two';
+        break;
+      case '3':
+        result += 'three';
+        break;
+      case '4':
+        result += 'four';
+        break;
+      case '5':
+        result += 'five';
+        break;
+      case '6':
+        result += 'six';
+        break;
+      case '7':
+        result += 'seven';
+        break;
+      case '8':
+        result += 'eight';
+        break;
+      case '9':
+        result += 'nine';
+        break;
+      case '-':
+        result += 'minus';
+        break;
+      case '.':
+        result += 'point';
+        break;
+      case ',':
+        result += 'point';
+        break;
+
+      default:
+        return false;
+    }
+  }
+  return result;
 }
 
 /**
