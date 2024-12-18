@@ -270,8 +270,20 @@ function convertNumberToString(numberStr) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  const half = Math.floor(str.length / 2);
+  let str1 = '';
+  let str2 = '';
+  for (let i = 0; i < half; i += 1) {
+    str1 += str[i];
+  }
+  for (let i = 1; i <= half; i += 1) {
+    str2 += str[str.length - i];
+  }
+  if (str1 === str2) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -288,15 +300,20 @@ function isPalindrome(/* str */) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  for (let i = 0; i <= str.length; i += 1) {
+    if (str[i] === letter) {
+      return i;
+    }
+  }
+  return -1;
 }
 
 /**
  * Checks if a number contains a specific digit.
  * In this task, the use of methods of the String and Array classes is not allowed.
  *
- * @param {number} num - The number to check.
+ * @param {number} number - The number to check.
  * @param {number} digit - The digit to search for.
  * @return {boolean} True if the number contains the digit, false otherwise.
  *
@@ -307,8 +324,16 @@ function getIndexOf(/* str, letter */) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  let number = num;
+  for (; number >= 1; ) {
+    if (number % 10 === digit) {
+      return true;
+    }
+    number /= 10;
+    number = Math.floor(number);
+  }
+  return false;
 }
 
 /**
@@ -324,8 +349,24 @@ function isContainNumber(/* num, digit */) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  if (arr.length === 1) {
+    return 0;
+  }
+  for (let i = 1; i < arr.length; i += 1) {
+    let left = 0;
+    let right = 0;
+    for (let j = i - 1; j >= 0; j -= 1) {
+      left += arr[j];
+    }
+    for (let k = i + 1; k < arr.length; k += 1) {
+      right += arr[k];
+    }
+    if (left === right) {
+      return i;
+    }
+  }
+  return -1;
 }
 
 /**
@@ -349,8 +390,54 @@ function getBalanceIndex(/* arr */) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const result = [];
+  for (let arr = 0; arr < size; arr += 1) {
+    result[arr] = [];
+  }
+  let val = 1;
+  let i = 0;
+  let j = 0;
+  let left = 0;
+  let right = size - 1;
+  let top = 0;
+  let bottom = size - 1;
+  for (let k = 0; k < size ** size; k += 1) {
+    if (top > bottom) {
+      break;
+    }
+    top += 1;
+    for (; j < right; j += 1) {
+      result[i][j] = val;
+      val += 1;
+    }
+    if (right < left) {
+      break;
+    }
+    right -= 1;
+    for (; i < bottom; i += 1) {
+      result[i][j] = val;
+      val += 1;
+    }
+    if (bottom < top) {
+      break;
+    }
+    bottom -= 1;
+    for (; j > left; j -= 1) {
+      result[i][j] = val;
+      val += 1;
+    }
+    if (left > right) {
+      break;
+    }
+    left += 1;
+    for (; i > top; i -= 1) {
+      result[i][j] = val;
+      val += 1;
+    }
+  }
+  result[i][j] = val;
+  return result;
 }
 
 /**
