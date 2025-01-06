@@ -483,7 +483,7 @@ function rotateMatrix(matrix) {
  * Take into account that the array can be very large. Consider how you can optimize your solution.
  * In this task, the use of methods of the Array and String classes is not allowed.
  *
- * @param {number[]} arr - The array to sort.
+ * @param {number[]} array - The array to sort.
  * @return {number[]} The sorted array.
  *
  * @example:
@@ -491,8 +491,56 @@ function rotateMatrix(matrix) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+function sortByAsc(array) {
+  class ArrayWrapper {
+    constructor(arr) {
+      this.data = arr;
+    }
+
+    get(index) {
+      return this.data[index];
+    }
+
+    set(index, value) {
+      this.data[index] = value;
+    }
+
+    length() {
+      return this.data.length;
+    }
+
+    swap(i, j) {
+      const temp = this.get(i);
+      this.set(i, this.get(j));
+      this.set(j, temp);
+    }
+  }
+
+  function partition(arrayWrapper, low, high) {
+    const pivot = arrayWrapper.get(high);
+    let i = low - 1;
+
+    for (let j = low; j <= high - 1; j += 1) {
+      if (arrayWrapper.get(j) <= pivot) {
+        i += 1;
+        arrayWrapper.swap(i, j);
+      }
+    }
+    arrayWrapper.swap(i + 1, high);
+    return i + 1;
+  }
+
+  function quickSort(arrayWrapper, low, high) {
+    if (low < high) {
+      const partitionIndex = partition(arrayWrapper, low, high);
+
+      quickSort(arrayWrapper, low, partitionIndex - 1);
+      quickSort(arrayWrapper, partitionIndex + 1, high);
+    }
+  }
+
+  const arrayWrapper = new ArrayWrapper(array);
+  quickSort(arrayWrapper, 0, arrayWrapper.length() - 1);
 }
 
 /**
